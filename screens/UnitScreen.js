@@ -1,10 +1,48 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import Card from '../components/Card'
+import { AntDesign } from '@expo/vector-icons'
 
 export default function UnitScreen(){
+    const data = [
+        {text: 'text'},
+        {text: 'text'},
+        {text: 'text'},
+        {text: 'text'},
+        {text: 'text'},
+    ]
+
+    const [save, setSave] = useState(false)
+
     return(
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Unit Screen</Text>
-        </View>
+        <FlatList
+            data = {
+                data.map((item) => {
+                    return {...item, saved: false}
+                })
+            }
+            renderItem = {({item}) => (
+                <Card>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Text>{item.text + item.saved}</Text>
+                        {(save === false)  
+                            ? 
+                            <TouchableOpacity
+                                onPress = {() => setSave(!save)}
+                            >
+                                <AntDesign name='staro' size={24}/> 
+                            </TouchableOpacity> 
+                            : 
+                            <TouchableOpacity
+                                onPress = {() => setSave(!save)}
+                            >
+                                <AntDesign name='star' size={24}/> 
+                            </TouchableOpacity> 
+                        } 
+                    </View> 
+                </Card>
+            )}
+        >
+        </FlatList>
     )
 }
